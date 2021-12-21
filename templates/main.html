@@ -1,0 +1,117 @@
+{% extends 'head.html' %}
+{% block content %}
+<style>
+    .post-text {
+        font-weight: bolder;
+        font-size: 17px;
+        font-family: monospace;
+        color: rgb(100, 100, 100);
+    }
+
+    .post {
+        border: 1px solid white;
+        padding: 20px;
+        max-width: 70%;
+        word-break: break-all;
+    }
+
+    .current-post {
+        border: 1px solid white;
+        padding: 20px;
+        max-width: 70%;
+        word-break: break-all;
+        background: rgb(60, 60, 60);
+    }
+
+    a .re:hover {
+        border-bottom: 2px solid rgb(255, 100, 100);
+    }
+
+    .search-input {
+        border: 1px solid white;
+        background: rgb(50, 50, 50);
+        width: 300px;
+        padding: 20px;
+        color: rgb(150, 150, 150);
+        font-size: 15px;
+        font-weight: bolder;
+    }
+
+    .button {
+        transition: 1s
+    }
+
+    .button:hover {
+       background: rgb(200, 100, 100);
+       color: white;
+       border-radius: 0px;
+   }
+
+
+</style>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main</title>
+</head>
+<body>
+<br><br>
+<center>
+    {% if posts %}
+    {% if user.is_authenticated %}
+    <div>
+        <form style="display: block;" action="{% url 'searchresult' %}" method="get" class="search">
+            <div>
+                <input name="q" class="search-input" placeholder="enter your request">
+
+                <button type="submit" class="search-input button"
+                        style="width: 140px; padding: 18px; margin-top: 30px;">Search 🔍
+                </button>
+                <br>
+            </div>
+        </form>
+        <br><br>
+    </div>
+    {% endif %}
+    {% for i in posts %}
+    {% if user == i.owner %}
+    <div class="current-post">
+        {% else %}
+        <div class="post">
+            {% endif %}
+            <span class="logo">{{ i.title }}</span><br><br>
+            <span class="post-text">{{ i.text|truncatechars:100 }}</span>
+            <div>
+                <a href="{% url 'detail-view' i.id %}"><br><br>
+                    <button class="green">View 👀</button>
+                    <br><br>
+                    <span style="color: white; font-size: 15px;" class="logo">
+                        📅 {{ i.create_date.date }} |
+                        ⏱ {{ i.create_date.time }} |
+                        👀 {{ i.views }} |
+                    </span>
+                </a>
+
+            </div>
+        </div>
+        <br><br>
+        {% endfor %}
+        {% else %}
+
+        <div class="logo" style="margin-top: 100px; margin-bottom: 100px;"><h1 class="re">A beginner platform needs
+            creators! 😎🤘
+        </h1><br>
+            Be the first one. Create a you first <a href="{% url 'createpost' %}"> <span class="re">note</span></a>📌
+        </div>
+        {% endif %}
+
+</center>
+
+</body>
+</html>
+{% include "./pagination.html" with page=posts %}
+{% endblock %}

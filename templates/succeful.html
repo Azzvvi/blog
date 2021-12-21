@@ -1,0 +1,19 @@
+{% extends 'head.html' %}
+{% block content %}
+<style>
+    a .re:hover {
+        border-bottom: 2px solid rgb(255, 100, 100);
+        }
+
+</style>
+<center>
+    <div class="logo"><h1 class="re">successful {{ title }}! 🍍
+    </h1><br>
+        You can create
+        <a href="{% url 'createpost' %}"><span class="re">another</span></a>😉
+    </div>
+    <a href="{% url 'main' %}">
+        <button>Go to Main page 🏡</button>
+    </a>
+</center>
+{% endblock %}

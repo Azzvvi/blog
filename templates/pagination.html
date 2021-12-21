@@ -1,0 +1,28 @@
+<style>
+    .pag {
+        font-size: 25px;
+        font-family: monospace;
+        color: white;
+    }
+
+    .urls {
+        color: rgb(200, 100, 100);
+    }
+</style>
+
+<center>
+    <div class="pagination">
+     <span class="step-links pag">
+      {% if page.has_previous %}
+          <a class="urls" href="?page={{ page.previous_page_number }}"><</a>
+      {% endif %}
+        <span class="current">
+       {{ page.number }} / {{ page.paginator.num_pages }}
+        </span>
+      {% if page.has_next %}
+            <a class="urls" href="?page={{ page.next_page_number }}">> </a>
+      {% endif %}
+      </span>
+    </div>
+</center>
+

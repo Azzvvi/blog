@@ -1,0 +1,102 @@
+{% extends 'head.html' %}
+{% block content %}
+<style>
+    .search-input {
+        border: 1px solid white;
+        background: rgb(50, 50, 50);
+        width: 300px;
+        padding: 20px;
+        color: rgb(150, 150, 150);
+        font-size: 15px;
+        font-weight: bolder;
+    }
+
+    .post-text {
+        font-weight: bolder;
+        font-size: 15px;
+        font-family: monospace;
+        color: rgb(100, 100, 100);
+    }
+
+    .post {
+        border: 1px solid white;
+        padding: 20px;
+        max-width: 70%;
+        word-break: break-all;
+    }
+
+    .current-post {
+        border: 1px solid white;
+        padding: 20px;
+        max-width: 70%;
+        word-break: break-all;
+        background: rgb(60, 60, 60);
+    }
+
+    .block {
+        border-bottom: 1px solid white;
+        padding: 10px;
+    }
+
+</style>
+<br><br>
+<center>
+    {% if user.is_authenticated %}
+    <form action="{% url 'searchresult' %}" method="get" class="search">
+        <input value="{{ search }}" name="q" class="search-input" placeholder="enter your request">
+        <button type="submit" class="search-input button" style="width: 140px; padding: 18.5px;">Search 🔍</button>
+        <br>
+    </form>
+    {% if not title_search and not text_search %}
+    <h1 class="logo" style="font-size: 50px;">Empty. Empty and lonely.</h1><br>
+    <iframe src="https://giphy.com/embed/d8lUKXD00IXSw" width="480" height="331" frameBorder="0" class="giphy-embed"
+            allowFullScreen></iframe>
+    {% else %}
+    {% if title_search %}
+    <div class="block"><h1 class="logo">search by titles:</h1>
+        {% for i in title_search %}
+        {% if user == i.owner %}
+        <div class="current-post">
+            {% else %}
+            <div class="post">
+                {% endif %}
+                <span class="logo">{{ i.title }}</span><br>
+                <span class="post-text">{{ i.text|truncatechars:100 }}</span>
+                <div>
+                    <a href="{% url 'detail-view' i.id %}">
+                        <button class="green">View 👀</button>
+                    </a>
+                </div>
+            </div>
+            <br><br>
+            {% endfor %}
+            {% else %}
+            <h1 class="logo" style="font-size: 50px;">search for titles did not return any results.</h1>
+        </div>
+        {% endif %}
+        {% if text_search %}
+        <div class="block">
+            <h1 class="logo">search by text:</h1>
+            {% for i in text_search %}
+            <div class="current-post">
+                <span class="logo">{{ i.title }}</span><br>
+                <span class="post-text">{{ i.text|truncatechars:100 }}</span>
+                <div>
+                    <a href="{% url 'detail-view' i.id %}">
+                        <button class="green">View 👀</button>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1 class="logo" style="font-size: 50px;">search for text did not return any results.</h1>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% else %}
+        <h1 class="logo" style="font-size: 70px;"><span class="re">First,</span> log in</h1>
+        <iframe src="https://giphy.com/embed/Lr8qwlTrcVyzsZFOUQ" width="480" height="405" frameBorder="0"
+                class="giphy-embed" allowFullScreen></iframe>
+        {% endif %}
+</center>
+{% endblock %}

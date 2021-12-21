@@ -1,0 +1,92 @@
+{% extends 'head.html' %}
+{% block content %}
+<style>
+    .head {
+        border-bottom: 1px solid white;
+        padding: 20px;
+    }
+    .post-text {
+        font-weight: bolder;
+        font-size: 15px;
+        font-family: monospace;
+        color: rgb(100, 100, 100);
+    }
+
+    .post {
+        border: 1px solid white;
+        padding: 20px;
+        max-width: 70%;
+        word-break: break-all;
+    }
+
+
+
+</style>
+<center>
+    <div class="head">
+        <span class="logo">
+            <h1 class="logo" style="font-size: 100px;">🦧</h1>
+            {% if user == current_user %}
+            <h1 class="logo" style="font-size: 70px;">Profile</h1>
+            {% else %}
+            <h1 class="logo" style="font-size: 70px;">User detail</h1>
+            {% endif %}
+        <span class="re" style="font-size: 200%;">{{ current_user.username }}</span><br>
+            </span>
+       <br>
+
+        {% if user == current_user %}
+        <h2 class="logo" style="font-size: 20px;">User №{{ user.id }}</h2>
+        <a href="{% url 'logout' %}">
+            <button>Sign out of accounts ❌</button>
+        </a>
+        <div id="blackout">
+            <div id="window">
+                Are you sure you want to delete your account?<br><br>
+                <a href="#">
+                    <button>❌</button>
+                </a>
+                <a href="{% url 'delete-account' %}">
+                    <button>✅</button>
+                </a>
+            </div>
+        </div>
+
+        <a href="#blackout">
+            <button>Delete 🗑</button>
+        </a><br>
+        <a href="{% url 'createpost' %}">
+            <button>Create note 📌</button>
+        </a>
+        {% endif %}
+    </div>
+    <h1 class="logo" style="font-size: 70px;">User posts</h1>
+    <div class="posts">
+        <br>
+        {% if posts %}
+        {% for i in posts %}
+        <div class="post">
+            <span class="logo">{{ i.title }}</span><br>
+            <span class="post-text">{{ i.text|truncatechars:100 }}</span>
+            <div>
+
+                <a href="{% url 'detail-view' i.id %}">
+                    <button class="green">View 👀</button>
+                </a>
+                {% if user == current_user %}
+                <a href="{% url 'delete' i.id %}">
+                    <button>Delete 🗑</button>
+                </a>
+                {% endif %}
+
+            </div>
+        </div>
+        <br><br>
+        {% endfor %}
+        {% else %}
+
+        <div class="logo" style="margin-top: 100px; margin-bottom: 100px;"><h1 class="re">No posts yet 🪁</h1></div>
+        {% endif %}
+    </div>
+</center>
+{% endblock %}

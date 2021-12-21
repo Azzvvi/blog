@@ -1,0 +1,80 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+<style>
+    input, textarea {
+        width: 60%;
+        margin-top: 5%;
+        padding: 3%;
+        border: 1px solid white;
+        background: rgb(50, 50, 50);
+        color: white;
+        font-size: 150%;
+        font-weight: bolder;
+        font-family: monospace;
+    }
+
+    button {
+        width: 20%;
+        margin-top: 5%;
+        padding: 20px;
+        border: 1px solid white;
+        background: rgb(50, 50, 50);
+        color: rgb(255, 100, 100);
+        transition: 0.5s;
+        font-size: 15px;
+        font-weight: bolder;
+        font-family: monospace;
+    }
+
+    button:hover {
+        border: 1px solid rgb(255, 100, 100);
+        background: rgb(255, 100, 100);
+        color: white;
+        border-radius: 20px;
+        opacity: 50%;
+    }
+
+    .error {
+        border: 1px solid rgb(200, 100, 100);
+        font-family: monospace;
+        font-size: 17px;
+        color: white;
+        padding: 10px;
+        width: 55%;
+        height: 100px;
+    }
+
+
+
+
+
+
+</style>
+<br><br><br>
+<center>
+
+    <div class="logo">
+        <span class="re">Authorization</span> account<br>
+    </div>
+    {% if error %}
+    <br>
+    <div class="error">
+        <span class="re" style="font-size: 20px;">Error</span><br><br>
+        <span>{{ error }}</span>
+    </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+<!--        <div class="error">-->
+<!--            {{ error }}-->
+<!--        </div>-->
+        {{ form.username }}
+        {{ form.password }}
+
+        <p style="color: white;">You don't have account? - <a href="{% url 'registration' %}">registration</a></p>
+        <button type="submit">Authorization 🌞</button>
+        <br>
+    </form>
+</center>
+{% endblock %}

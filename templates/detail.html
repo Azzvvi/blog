@@ -1,0 +1,128 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+<style>
+    .post-text {
+        font-weight: bolder;
+        font-size: 20px;
+        font-family: monospace;
+        color: rgb(150, 150, 150);
+    }
+
+    .post-text h1 {
+        color: white;
+        font-weight: 100;
+        font-size: 25px;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    code {
+        background: rgb(65, 65, 65);
+        color: rgb(150, 150, 150);
+    }
+
+    code::before {
+        content: "- ";
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .re:hover {
+        border-bottom: 2px solid rgb(255, 100, 100);
+    }
+
+    .post-detail {
+        margin-left: 20px;
+    }
+
+    .comments {
+        font-family: monospace;
+    }
+
+    .comment {
+        border: 1px solid white;
+        padding: 20px;
+        word-break: break-all;
+        width: 70%;
+    }
+
+    .comment-form {
+        background: rgb(50, 50, 50);
+        font-family: monospace;
+        font-size: 15px;
+        color: white;
+        font-weight: bold;
+        width: 80%;
+        height: 10%;
+    }
+
+    .user-profile-image {
+        width: 50px;
+        border-radius: 500px;
+        border: 2px solid white;
+    }
+
+    .reply-comment {
+        margin-top: 0px;
+    }
+
+    hr {
+        max-width: 400px;
+    }
+
+    .head-post {
+        background-image: url({{ post.spoiler.url }});
+        width: 100%;
+        height: 250px;
+    }
+
+    .reply {
+        margin-top: 30px;
+        width: 500px;
+        height: 400px;
+        display: block;
+    }
+
+</style>
+<!--<div class="head-post">-->
+
+<!--</div><br>-->
+<title>Post #{{ post.id }}</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div class="post-detail">
+    <a href="{% url 'main' %}">
+            <span class="logo">
+                <br>
+            <span class="re" style="font-size: 15px;">
+            < main
+            </span></span><br>
+    </a><br>
+    <span class="logo" style="font-size: 30px;">{{ post.title }}</span><br>
+    <span class="post-text">
+        📅 {{ post.create_date.date }} |
+        ⏱ {{ post.create_date.time }} |
+        👀 {{ post.views }} |
+    </span>
+    <span class="post-text" style="font-weight: 100;">{{ post.text|safe|linebreaks }}</span>
+</div>
+
+{% if user.is_authenticated %}
+    {% else %}
+    <a href="{% url 'login' %}">
+        {% endif %}
+</a><br>
+</body>
+</html>
+{% endblock %}

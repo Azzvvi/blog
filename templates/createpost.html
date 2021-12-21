@@ -1,0 +1,103 @@
+{% extends 'head.html' %}
+{% load static %}
+{% block content %}
+<style>
+    input, textarea {
+        width: 700px;
+        margin-top: 50px;
+        padding: 3%;
+        border: 1px solid white;
+        background: rgb(50, 50, 50);
+        color: white;
+        font-size: 150%;
+        font-weight: bolder;
+        font-family: monospace;
+    }
+
+    button {
+        width: 20%;
+        margin-top: 5%;
+        padding: 20px;
+        border: 1px solid white;
+        background: rgb(50, 50, 50);
+        color: rgb(255, 100, 100);
+        transition: 0.5s;
+        font-size: 15px;
+        font-weight: bolder;
+        font-family: monospace;
+    }
+
+    button:hover {
+        border: 1px solid rgb(255, 100, 100);
+        background: rgb(255, 100, 100);
+        color: white;
+        border-radius: 20px;
+        opacity: 50%;
+    }
+
+    .tools {
+        max-width: 500px;
+    }
+
+
+
+
+</style>
+<script>
+    function setFocusToMessageBox(){
+        document.getElementById("messageBox").focus();
+    }
+
+    function insert (word) {
+        let inp = document.querySelector('textarea');
+        let start = inp.selectionStart;
+        inp.value = inp.value.substring(0, start) + word +
+        inp.value.substring(inp.selectionEnd, inp.value.length)
+        inp.focus();
+        inp.setSelectionRange(start, start + word.length)
+        setFocusToMessageBox()
+
+        let el = document.GetElementById('text');
+        el.focus()
+        el.setSelectionRange(4, 4);
+    }
+
+
+
+
+
+</script>
+<br><br><br>
+<title>Create post</title>
+<center>
+    {% if user.is_authenticated %}
+
+
+    <div class="logo">
+        <span class="re">Create</span> post<br>
+    </div>
+    <div class="tools">
+        <button class="no_focus" onclick="insert('<h1>  </h1>')">Title</button>
+        <button class="no_focus" onclick="insert('<code>   </code>')">Quote</button>
+    </div>
+    {% if post.title %}
+    <form method="post" action="{% url 'edit-post' post.id %}">
+        {% else %}
+        <form method="post" action="{% url 'createpost' %}">
+            {% endif %}
+            {% csrf_token %}
+            <input value="{{ post.title }}" style="padding: 10px; font-size: 18px; height: 80px;" placeholder="title..."
+                   name="title" required><br>
+            <textarea id="text" placeholder="text..." name="text"
+                      style="padding: 10px; height: 400px; font-size: 16px;
+                  color: rgb(100, 100, 100);" required>{{ post.text }}</textarea><br>
+            <button type="submit">Publish ✅</button>
+            <br>
+        </form>
+        {% else %}
+        <div class="logo" style="font-size: 60px; margin: 200px;">
+            <span class="re">First, </span>log in
+        </div>
+        {% endif %}
+</center>
+{% endblock %}

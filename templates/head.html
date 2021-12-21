@@ -1,0 +1,181 @@
+{% load static %}
+
+<style>
+    header {
+        background: rgb(50, 50, 50);
+        width: 100%;
+        min-height: 80px;
+        top: 0;
+        position: fixed;
+        border-bottom: 1px solid white;
+        word-break: normal ;
+        padding-bottom: 5px;
+    }
+
+    body {
+        background: rgb(50, 50, 50);
+    }
+
+    .logo {
+        font-family: monospace;
+        font-size: 25px;
+        color: white;
+        font-weight: bolder;
+    }
+
+    .re {
+        color: rgb(255, 100, 100);
+    }
+
+        .logo-links {
+            margin-top: 20px;
+        }
+
+       .logo-links a {
+            font-family: monospace;
+            font-size: 15px;
+            margin: 20px;
+            font-weight: bolder;
+            color: rgb(150, 150, 150);
+            text-decoration: none;
+       }
+
+       .logo-links a:hover {
+            border-bottom: 2px solid white;
+            color: white;
+       }
+
+       *::selection {
+        color: rgb(50, 50, 50);
+        background: rgb(255, 100, 100);
+        }
+
+        a {
+        text-decoration: none;
+        }
+            button {
+            cursor: pointer;
+            margin-right: 10px;
+            display: inline-block;
+            align-items: center;
+            justify-content: center;
+            min-width: 200px;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid white;
+            background: rgb(50, 50, 50);
+            color: rgb(255, 100, 100);
+            transition: 1s;
+            font-size: 15px;
+            font-weight: bolder;
+            font-family: monospace;
+    }
+
+    .green:hover {
+        border: 1px solid rgb(100, 255, 100);
+        background: rgb(100, 255, 100);
+        color: white;
+    }
+
+    .orange:hover {
+        border: 1px solid rgb(255, 255, 100);
+        background: rgb(255, 150, 50);
+        color: white;
+    }
+
+    button:hover {
+        border: 1px solid rgb(255, 100, 100);
+        background: rgb(255, 100, 100);
+        color: white;
+        box-shadow: 0px 5px 10px 10px rgba(0, 0, 0, 0.2) inset;
+    }
+
+    .footer {
+        width: 75%;
+        display: table;
+        padding: 50px;
+        bottom: 0;
+    }
+
+    footer {
+        background: rgb(30, 30, 30);
+        height: 300px;
+    }
+
+    .links {
+        display: table-cell;
+    }
+
+    .link {
+        font-family: monospace;
+        font-size: 20px;
+        margin: 10px;
+        border: 1px solid white;
+        padding: 15px;
+        width: 150px;
+        color: white;
+        transition: 0.5s;
+    }
+
+    #blackout {
+        background: rgba(102, 102, 102, 0.5);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none;
+      }
+      #window {
+        width: 300px;
+        height: 300px;
+        text-align: center;
+        padding: 15px;
+        border: 1px solid white;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        margin-top: 10%;
+        background: rgb(50, 50, 50);
+        font-size: 20px;
+        font-family: monospace;
+      }
+      #blackout:target {
+        display: block;
+       }
+
+       .link:hover {
+           background: rgb(100, 100, 100);
+       }
+
+
+
+</style>
+<header>
+    <div class="logo"><span class="re">B</span>log
+        {% if user.is_authenticated %}
+        <span style="font-size: 15px;">- especially for <span class="re">{{ user.username }}</span></span>
+        {% endif %}
+    </div>
+    <div class="logo-links">
+        <a href="{% url 'main' %}">🏡.Main</a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'detail-user' user.id %}">🙍‍♂.Account</a>
+        {% else %}
+        <a href="{% url 'login' %}">Auth</a>
+        {% endif %}
+    </div>
+</header>
+<br><br><br>
+{% block content %}
+
+{% endblock %}
+<center>
+    <h1 class="logo" style="font-size: 100px;">. . .</h1>
+</center>
+<br><br><br>
+
